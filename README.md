@@ -56,7 +56,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 For any questions or feedback, feel free to reach out:
 
-- **Email**: your_email@example.com
+- **Email**: akshayjithps007@gmail.com
 - **Twitter**: (https://x.com/AkshayjithPs)
 
 ---
