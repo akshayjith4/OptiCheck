@@ -1,6 +1,6 @@
 # 🎨 VisionCheck - Eye Test Application
 
-![VisionCheck Logo](link_to_logo_image) <!-- Replace with your logo or image link -->
+![VisionCheck Logo](images/logo.svg) 
 
 **VisionCheck** is a modern, web-based eye test application designed to help you evaluate your vision in a fun and interactive way! With tests for distance vision, near vision, astigmatism, and color blindness, you can quickly assess your visual abilities using engaging image-based tests.
 
