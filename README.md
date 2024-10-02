@@ -1,6 +1,6 @@
 # 🎨 VisionCheck - Eye Test Application
 
-<img src="images/logo.svg" alt="optiCheck Logo" width="200" /> <!-- Adjust width as needed -->
+<img src="images/logo.svg" alt="optiCheck Logo" width="100" /> <!-- Adjust width as needed -->
 
 
 **VisionCheck** is a modern, web-based eye test application designed to help you evaluate your vision in a fun and interactive way! With tests for distance vision, near vision, astigmatism, and color blindness, you can quickly assess your visual abilities using engaging image-based tests.
@@ -26,7 +26,7 @@ To run the VisionCheck application locally, follow these steps:
 
 1. **Clone the Repository**:
     ```bash
-    git clone https://github.com/akshayjith4/visioncheck.git
+    git clone https://github.com/akshayjith4/OptiCheck.git
     cd visioncheck
     ```
 
