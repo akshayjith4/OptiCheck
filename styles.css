@@ -1,0 +1,69 @@
+/* General Reset and Body Styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    color: #343a40;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 90%;
+}
+
+/* Header and Highlight Styling */
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.highlight {
+    color: #007bff;
+}
+
+/* Test Buttons Styling */
+.test-buttons {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 15px 25px;
+    margin: 10px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 1.2em;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Disclaimer Section Styling */
+.disclaimer {
+    background-color: #fff3cd;
+    padding: 15px;
+    border-radius: 8px;
+    color: #856404;
+    font-size: 0.9em;
+    border: 1px solid #ffeeba;
+    text-align: left;
+}
+
+.disclaimer strong {
+    font-weight: bold;
+}
