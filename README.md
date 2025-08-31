@@ -1,64 +1,59 @@
-# 🎨 OptiCheck - Eye Test Application
+# 👁️ OptiCheck
 
-<img src="images/logo.svg" alt="optiCheck Logo" width="100" /> <!-- Adjust width as needed -->
+**OptiCheck** is a professional-grade web application designed to help you monitor your visual health from the comfort of your home. It features clinically-inspired vision tests that provide insights into various aspects of your eye health.
 
-
-**OptiCheck** is a modern, web-based eye test application designed to help you evaluate your vision in a fun and interactive way! With tests for distance vision, near vision, astigmatism, and color blindness, you can quickly assess your visual abilities using engaging image-based tests.
-
-## 🚀 Features
-
-- **🔭 Distance Vision Test**: Check your ability to see objects at a distance.
-- **📖 Near Vision Test**: Evaluate clarity for nearby objects.
-- **🔍 Astigmatism Test**: Identify visual patterns to test for astigmatism.
-- **🌈 Color Blindness Test**: Recognize numbers within colorful patterns to check for color vision deficiencies.
-- **🖥️ User-Friendly Interface**: Enjoy an intuitive design with clear instructions and immediate feedback.
-
-## 📚 How It Works
-
-1. **Choose a Test**: Select your desired test from the home page.
-2. **Identify Numbers**: Look at the displayed image and enter the number shown.
-3. **Instant Feedback**: Get immediate feedback on your answer.
-4. **Try Again**: After each attempt, decide to try another image or exit.
-
-## 🛠️ Getting Started
-
-To run the VisionCheck application locally, follow these steps:
-
-1. **Clone the Repository**:
-    ```bash
-    git clone https://github.com/akshayjith4/OptiCheck.git
-    cd visioncheck
-    ```
-
-2. **Open the `index.html` file** in your web browser.
-
-3. **Enjoy Testing Your Vision!** 👁️✨
-
-## 🌐 Technologies Used
-
-- **HTML**: Structure your web content.
-- **CSS**: Style your application for a beautiful layout.
-- **JavaScript**: Add interactivity and dynamic behavior.
-
-## ⚠️ Disclaimer
-
-This application is **not** a substitute for professional eye examinations. For accurate diagnosis and comprehensive assessments of your vision, please consult an eye doctor or ophthalmologist.
-
-## 🤝 Contributing
-
-We welcome contributions! If you have suggestions for improvements or new features, please feel free to open an issue or submit a pull request. Your feedback is essential for making VisionCheck even better!
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 💬 Contact
-
-For any questions or feedback, feel free to reach out:
-
-- **Email**: akshayjithps007@gmail.com
-- **Twitter**: (https://x.com/AkshayjithPs)
+🔗 [Live Demo](https://akshayjith4.github.io/OptiCheck/)
 
 ---
 
-**Enjoy testing your vision!** 👁️❤️
+## 📋 Features
+
+- **Distance Vision Test**: Assess your ability to see distant objects clearly using Snellen chart principles.
+- **Near Vision Test**: Evaluate your close-up vision for reading and near tasks using standard test equivalents.
+- **Astigmatism Test**: Detect astigmatism by identifying blurred or distorted patterns.
+- **Color Blindness Test**: Identify color vision deficiencies using Ishihara plates.
+- **Fun Eye Facts**: Learn interesting and surprising facts about eye health and vision science.
+
+---
+
+## 🚀 Getting Started
+
+To run the project locally:
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/akshayjith4/OptiCheck.git
+   ```
+2. Navigate to the project directory:
+    cd OptiCheck
+
+3. Open index.html in your web browser.
+
+ 🛠️ Built With
+    HTML5
+    CSS3
+    JavaScript
+    GitHub Pages - for deployment
+
+📸 Screenshot
+![OptiCheck UI](images/screenshot.png)
+
+
+🧠 Did You Know?
+Eye tests can detect schizophrenia with up to 98.3% precision using simple eye movement exams.
+
+📌 Contributing
+Contributions are welcome! Feel free to fork the repository, open an issue, or submit a pull request.
+
+📄 License
+This project is open source and available under the MIT License
+.
+
+👤 Author
+[Akshayjith](https://github.com/akshayjith4)
+
+📬 Contact
+For any questions or suggestions, feel free to reach out via GitHub Issues.
+
+Let me know if you'd like this customized further (e.g., badges, deployment instructions, or linking to a `LICENSE` file).
