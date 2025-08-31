@@ -3,22 +3,585 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Astigmatism Test</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Astigmatism Test - OptiCheck</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a56db;
+            --primary-dark: #1e40af;
+            --primary-light: #3b82f6;
+            --primary-extra-light: #dbeafe;
+            --secondary: #64748b;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --accent: #2563eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --radius: 10px;
+            --shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+            --shadow-hover: 0 8px 20px rgba(37, 99, 235, 0.25);
+            --transition: all 0.3s ease;
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, #f0f4ff 0%, #e6e6ff 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-header {
+            background: var(--gradient);
+            box-shadow: var(--shadow);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 1.4rem;
+            gap: 0.75rem;
+        }
+
+        .logo {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            color: var(--primary);
+            border-radius: 50%;
+            font-size: 1.4rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            width: 100%;
+        }
+
+        .test-instructions {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+            text-align: center;
+        }
+
+        .instructions-content {
+            background: var(--primary-extra-light);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin: 1.5rem 0;
+        }
+
+        .instructions-list {
+            list-style-type: none;
+            margin: 1rem 0;
+        }
+
+        .instructions-list li {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .instructions-list i {
+            color: var(--primary);
+            margin-top: 0.25rem;
+        }
+
+        .distance-requirement {
+            background: #fffbeb;
+            border-left: 4px solid var(--warning);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin: 1.5rem 0;
+        }
+
+        .distance-requirement h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #b45309;
+            margin-bottom: 0.75rem;
+        }
+
+        .test-content {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .test-image-container {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: var(--radius);
+            display: inline-block;
+        }
+
+        .test-image {
+            width: 500px;
+            height: 500px;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background: 
+                radial-gradient(circle at center, #fff 10%, transparent 10.5%),
+                repeating-conic-gradient(
+                    from 0deg,
+                    #1a56db 0deg 5deg,
+                    #fff 5deg 10deg
+                );
+            background-blend-mode: difference;
+        }
+
+        .test-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+
+        .control-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .control-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .distance-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: var(--primary-extra-light);
+            border-radius: var(--radius);
+        }
+
+        .distance-visual .screen {
+            width: 60px;
+            height: 40px;
+            background: var(--dark);
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .distance-visual .screen::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 20px;
+            background: var(--primary-light);
+            border-radius: 3px;
+        }
+
+        .distance-visual .ruler {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .distance-visual .ruler-line {
+            width: 40px;
+            height: 2px;
+            background: var(--secondary);
+        }
+
+        .distance-visual .ruler-text {
+            font-size: 0.9rem;
+            color: var(--secondary);
+        }
+
+        .distance-visual .person {
+            font-size: 1.5rem;
+        }
+
+        .results-section {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .result-card {
+            background: var(--primary-extra-light);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            text-align: center;
+        }
+
+        .result-card h3 {
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
+
+        .result-option {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            background: white;
+            border: 2px solid var(--primary-light);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: left;
+        }
+
+        .result-option:hover {
+            background: var(--primary-extra-light);
+        }
+
+        .result-option.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 500;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .nav-btn.outline:hover {
+            background: var(--primary-extra-light);
+        }
+
+        .disclaimer {
+            background-color: #fffbeb;
+            border-left: 4px solid var(--warning);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin-top: 2rem;
+        }
+
+        .disclaimer-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            color: #b45309;
+        }
+
+        .disclaimer p {
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.75rem;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .test-instructions, .test-content, .results-section {
+                padding: 1.5rem;
+            }
+            
+            .test-image {
+                width: 350px;
+                height: 350px;
+            }
+            
+            .test-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .test-image {
+                width: 280px;
+                height: 280px;
+            }
+            
+            .distance-visual {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .distance-visual .ruler {
+                flex-direction: column;
+            }
+            
+            .distance-visual .ruler-line {
+                width: 2px;
+                height: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <a href="index.html">
-            <img src="images/logo.svg" alt="OptiCheck Logo" width="250">
+    <header class="main-header">
+        <a href="index.html" class="logo-container">
+            <div class="logo">
+                <i class="fas fa-eye"></i>
+            </div>
+            <span>OptiCheck</span>
         </a>
     </header>
 
     <div class="container">
-        <h1>Astigmatism Test</h1>
-        <p>Look at the chart below and check if any lines appear distorted or blurry.</p>
-        <img src="images/astigmatism-chart.jpg" alt="Astigmatism Test" style="width: 100%; max-width: 600px;">
-        <br><br>
-        <a href="index.html">Back to Home</a>
+        <div class="test-instructions">
+            <h1>Astigmatism Test</h1>
+            <p>This test helps detect astigmatism, a common vision condition that causes blurred vision due to an irregularly shaped cornea.</p>
+            
+            <div class="instructions-content">
+                <h3><i class="fas fa-info-circle"></i> How to perform this test:</h3>
+                <ul class="instructions-list">
+                    <li><i class="fas fa-check-circle"></i> Position yourself exactly 3 feet (1 meter) from your screen</li>
+                    <li><i class="fas fa-check-circle"></i> If you wear glasses or contacts, keep them on</li>
+                    <li><i class="fas fa-check-circle"></i> Cover one eye and look at the center of the pattern</li>
+                    <li><i class="fas fa-check-circle"></i> Note if any lines appear darker, sharper, or more distinct than others</li>
+                    <li><i class="fas fa-check-circle"></i> Repeat with the other eye</li>
+                </ul>
+            </div>
+            
+            <div class="distance-requirement">
+                <h3><i class="fas fa-exclamation-triangle"></i> Important Distance Requirement</h3>
+                <p>For accurate results, you must be positioned <strong>exactly 3 feet (1 meter)</strong> from your screen. This standardized distance ensures the test functions correctly.</p>
+            </div>
+        </div>
+
+        <div class="test-content">
+            <h2>Astigmatism Dial Test</h2>
+            <p>Look at the following pattern. Do all lines appear equally sharp and dark?</p>
+            
+            <div class="test-image-container">
+                <div class="test-image" id="testImage"></div>
+            </div>
+            
+            <div class="test-controls">
+                <button class="control-btn" onclick="toggleColor()">
+                    <i class="fas fa-palette"></i> Change Color
+                </button>
+            </div>
+            
+            <div class="distance-visual">
+                <div class="screen"></div>
+                <div class="ruler">
+                    <div class="ruler-line"></div>
+                    <div class="ruler-text">3 feet</div>
+                    <div class="ruler-line"></div>
+                </div>
+                <div class="person">👁️</div>
+            </div>
+        </div>
+
+        <div class="results-section">
+            <h2>Your Results</h2>
+            <p>Select how the lines appear to each of your eyes:</p>
+            
+            <div class="results-grid">
+                <div class="result-card">
+                    <h3>Left Eye</h3>
+                    <button class="result-option" onclick="selectOption(this, 'left')">All lines appear equal</button>
+                    <button class="result-option" onclick="selectOption(this, 'left')">Some lines appear darker/sharper</button>
+                    <button class="result-option" onclick="selectOption(this, 'left')">Lines appear wavy or distorted</button>
+                </div>
+                
+                <div class="result-card">
+                    <h3>Right Eye</h3>
+                    <button class="result-option" onclick="selectOption(this, 'right')">All lines appear equal</button>
+                    <button class="result-option" onclick="selectOption(this, 'right')">Some lines appear darker/sharper</button>
+                    <button class="result-option" onclick="selectOption(this, 'right')">Lines appear wavy or distorted</button>
+                </div>
+            </div>
+            
+            <div id="resultsMessage" style="margin-top: 1.5rem; padding: 1rem; border-radius: var(--radius); display: none;"></div>
+        </div>
+
+        <div class="navigation">
+            <a href="index.html" class="nav-btn outline">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+            <button class="nav-btn" onclick="showResults()">
+                <i class="fas fa-chart-line"></i> See Results
+            </button>
+        </div>
+
+        <div class="disclaimer">
+            <div class="disclaimer-title">
+                <i class="fas fa-exclamation-circle"></i>
+                <strong>Important Notice</strong>
+            </div>
+            <p>This test is for preliminary screening purposes only. It does not replace a professional eye examination. If you suspect you have vision problems, please consult with an optometrist or ophthalmologist for a comprehensive eye exam.</p>
+        </div>
     </div>
+
+    <script>
+        const chartColors = ["#1a56db", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6"];
+        let currentColor = 0;
+        let leftEyeResult = null;
+        let rightEyeResult = null;
+        
+        function toggleColor() {
+            currentColor = (currentColor + 1) % chartColors.length;
+            updateChart();
+        }
+        
+        function updateChart() {
+            const testImage = document.getElementById('testImage');
+            testImage.style.background = 
+                `radial-gradient(circle at center, #fff 10%, transparent 10.5%),
+                repeating-conic-gradient(
+                    from 0deg,
+                    ${chartColors[currentColor]} 0deg 5deg,
+                    #fff 5deg 10deg
+                )`;
+        }
+        
+        function selectOption(option, eye) {
+            // Remove selected class from all options in this eye's section
+            const parent = option.parentElement;
+            const options = parent.querySelectorAll('.result-option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            
+            // Add selected class to clicked option
+            option.classList.add('selected');
+            
+            // Store result
+            if (eye === 'left') {
+                leftEyeResult = option.textContent;
+            } else {
+                rightEyeResult = option.textContent;
+            }
+        }
+        
+        function showResults() {
+            const message = document.getElementById('resultsMessage');
+            
+            if (!leftEyeResult || !rightEyeResult) {
+                message.style.display = 'block';
+                message.style.backgroundColor = '#fffbeb';
+                message.style.borderLeft = '4px solid #f59e0b';
+                message.innerHTML = '<strong>Please complete the test for both eyes before viewing results.</strong>';
+                return;
+            }
+            
+            // Simple result interpretation
+            let resultText = '';
+            if (leftEyeResult.includes('equal') && rightEyeResult.includes('equal')) {
+                resultText = '<strong>No significant astigmatism detected:</strong> Both eyes appear to have normal vision without significant astigmatism.';
+                message.style.backgroundColor = '#ecfdf5';
+                message.style.borderLeft = '4px solid #10b981';
+            } else if (leftEyeResult.includes('wavy') || rightEyeResult.includes('wavy')) {
+                resultText = '<strong>Possible astigmatism detected:</strong> You may have astigmatism or other vision issues. Consider consulting an eye care professional.';
+                message.style.backgroundColor = '#fef3f2';
+                message.style.borderLeft = '4px solid #ef4444';
+            } else {
+                resultText = '<strong>Mild irregularities detected:</strong> Some lines appear different, which may indicate mild astigmatism. Consider an eye exam for confirmation.';
+                message.style.backgroundColor = '#fffbeb';
+                message.style.borderLeft = '4px solid #f59e0b';
+            }
+            
+            message.style.display = 'block';
+            message.innerHTML = resultText + '<div style="margin-top: 1rem;"><strong>Remember:</strong> This is a preliminary screening only. For accurate diagnosis, consult an eye care professional.</div>';
+        }
+        
+        // Initialize the test
+        document.addEventListener('DOMContentLoaded', function() {
+            updateChart();
+        });
+    </script>
 </body>
 </html>
