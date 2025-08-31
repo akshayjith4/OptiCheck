@@ -3,30 +3,482 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OptiCheck - Eye Test App</title>
-    <link rel="stylesheet" href="styles.css">
-</head> 
+    <title>OptiCheck - Professional Eye Test App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables for consistent theming */
+        :root {
+            --primary: #1a56db;
+            --primary-dark: #1e40af;
+            --primary-light: #3b82f6;
+            --primary-extra-light: #dbeafe;
+            --secondary: #64748b;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --accent: #2563eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --radius: 10px;
+            --shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+            --shadow-hover: 0 8px 20px rgba(37, 99, 235, 0.25);
+            --transition: all 0.3s ease;
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, #f0f4ff 0%, #e6e6ff 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        .main-header {
+            background: var(--gradient);
+            box-shadow: var(--shadow);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 1.4rem;
+            gap: 0.75rem;
+        }
+
+        .logo {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            color: var(--primary);
+            border-radius: 50%;
+            font-size: 1.4rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            width: 100%;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2.5rem;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            font-size: 2.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+            letter-spacing: -0.5px;
+        }
+
+        .highlight {
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background-color: rgba(37, 99, 235, 0.2);
+            z-index: -1;
+            border-radius: 2px;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--secondary);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+
+        /* Eye Facts Section */
+        .eye-facts {
+            background: var(--primary-extra-light);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            border-left: 4px solid var(--primary);
+        }
+
+        .facts-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        .facts-header i {
+            font-size: 1.5rem;
+        }
+
+        .fact-content {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .new-fact-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .new-fact-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Test Cards */
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .test-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--primary-extra-light);
+        }
+
+        .test-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .test-icon {
+            background: var(--gradient);
+            color: white;
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .test-content {
+            padding: 2rem;
+        }
+
+        .test-title {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+
+        .test-description {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--gradient);
+            color: white;
+            text-decoration: none;
+            padding: 0.9rem 1.8rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Disclaimer */
+        .disclaimer {
+            background-color: #fffbeb;
+            border-left: 4px solid var(--warning);
+            padding: 2rem;
+            border-radius: var(--radius);
+            margin-top: 2rem;
+            box-shadow: 0 4px 6px rgba(245, 158, 11, 0.1);
+        }
+
+        .disclaimer-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            color: #b45309;
+            font-size: 1.2rem;
+        }
+
+        .disclaimer p {
+            color: var(--secondary);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-dark);
+            color: white;
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-link:hover {
+            color: var(--primary-extra-light);
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.25rem;
+            }
+            
+            .test-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .hero {
+                padding: 1.5rem;
+            }
+            
+            .eye-facts {
+                padding: 1.5rem;
+            }
+            
+            .test-icon {
+                height: 120px;
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .main-header {
+                padding: 1rem;
+            }
+            
+            .test-content {
+                padding: 1.5rem;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
 <body>
     <header class="main-header">
         <a href="index.html" class="logo-container">
-            <img src="images/logo.svg" alt="OptiCheck Logo" class="logo">
+            <div class="logo">
+                <i class="fas fa-eye"></i>
+            </div>
+            <span>OptiCheck</span>
         </a>
     </header>
 
     <div class="container">
-        <h1>Welcome to <span class="highlight">OptiCheck</span></h1>
-        <p>Your quick vision test at your fingertips.</p>
+        <div class="hero">
+            <h1>Welcome to <span class="highlight">OptiCheck</span></h1>
+            <p class="subtitle">Professional-grade vision tests to help you monitor your eye health from anywhere. Our clinically-inspired tests provide insights into your visual acuity.</p>
+            
+            <!-- Eye Facts Section -->
+            <div class="eye-facts">
+                <div class="facts-header">
+                    <i class="fas fa-lightbulb"></i>
+                    <h2>Did You Know?</h2>
+                </div>
+                <p class="fact-content" id="eye-fact">The human eye can distinguish about 10 million different colors.</p>
+                <button class="new-fact-btn" onclick="showRandomFact()">
+                    <i class="fas fa-sync-alt"></i>
+                    Show Another Fact
+                </button>
+            </div>
+        </div>
 
-        <div class="test-buttons">
-            <a href="distance-test.html" class="btn">Distance Vision Test</a>
-            <a href="near-test.html" class="btn">Near Vision Test</a>
-            <a href="astigmatism-test.html" class="btn">Astigmatism Test</a>
-            <a href="color-blindness-test.html" class="btn">Color Blindness Test</a>
+        <div class="test-grid">
+            <div class="test-card">
+                <div class="test-icon">
+                    <i class="fas fa-road"></i>
+                </div>
+                <div class="test-content">
+                    <h3 class="test-title">Distance Vision Test</h3>
+                    <p class="test-description">Check your ability to see objects at a distance clearly with our standardized test based on Snellen chart principles.</p>
+                    <a href="distance-test.html" class="btn">
+                        <span>Start Test</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="test-card">
+                <div class="test-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <div class="test-content">
+                    <h3 class="test-title">Near Vision Test</h3>
+                    <p class="test-description">Evaluate your close-up vision for reading and other near tasks using Jaeger chart equivalents.</p>
+                    <a href="near-test.html" class="btn">
+                        <span>Start Test</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="test-card">
+                <div class="test-icon">
+                    <i class="fas fa-sun"></i>
+                </div>
+                <div class="test-content">
+                    <h3 class="test-title">Astigmatism Test</h3>
+                    <p class="test-description">Detect astigmatism by identifying distorted or blurry lines in patterns similar to professional dials.</p>
+                    <a href="astigmatism-test.html" class="btn">
+                        <span>Start Test</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="test-card">
+                <div class="test-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <div class="test-content">
+                    <h3 class="test-title">Color Blindness Test</h3>
+                    <p class="test-description">Identify numbers hidden within color patterns based on Ishihara plates to test color vision deficiencies.</p>
+                    <a href="color-blindness-test.html" class="btn">
+                        <span>Start Test</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
         </div>
 
         <div class="disclaimer">
-            <p><strong>Disclaimer:</strong> This is not a professional eye test. For accurate diagnosis and proper assessment of your vision, please consult an eye doctor or ophthalmologist.</p>
+            <div class="disclaimer-title">
+                <i class="fas fa-exclamation-circle"></i>
+                <strong>Important Medical Disclaimer</strong>
+            </div>
+            <p>OptiCheck provides self-administered vision screening tests for informational purposes only. These tests are not a substitute for a comprehensive eye examination by a qualified optometrist or ophthalmologist. For accurate diagnosis and proper assessment of your vision, please consult an eye care professional. Regular eye exams are recommended for everyone, even if you pass these screening tests.</p>
         </div>
     </div>
-</body>
-</html>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 OptiCheck. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">About Us</a>
+                <a href="mailto:akshayjith.dev@gmail.com?subject=OptiCheck%20Support&body=Hello%20Akshayjith," class="footer-link">
+                    Contact
+                </a>
+            </div>
+        </div>
+    </footer>
+
+        <!-- Load facts from external file -->
+<script src="facts.js"></script>
+
+<script>
+    // Function to display a random eye fact
+    function showRandomFact() {
+        const randomIndex = Math.floor(Math.random() * eyeFacts.length);
+        document.getElementById('eye-fact').textContent = eyeFacts[randomIndex];
+    }
+
+    // Show a random fact when the page loads
+    document.addEventListener('DOMContentLoaded', showRandomFact);
+</script>
+
+    </body>
+    </html>
+    
