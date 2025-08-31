@@ -40,20 +40,20 @@ To run the project locally:
 ![OptiCheck UI](images/screenshot.png)
 
 
-🧠 Did You Know?
+##🧠 Did You Know?
 Eye tests can detect schizophrenia with up to 98.3% precision using simple eye movement exams.
 
-📌 Contributing
+##📌 Contributing
 Contributions are welcome! Feel free to fork the repository, open an issue, or submit a pull request.
 
-📄 License
+##📄 License
 This project is open source and available under the MIT License
 .
 
 👤 Author
 [Akshayjith](https://github.com/akshayjith4)
 
-📬 Contact
+##📬 Contact
 For any questions or suggestions, feel free to reach out via GitHub Issues.
 
 Let me know if you'd like this customized further (e.g., badges, deployment instructions, or linking to a `LICENSE` file).
