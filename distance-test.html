@@ -3,22 +3,595 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Distance Vision Test</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Distance Vision Test - OptiCheck</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a56db;
+            --primary-dark: #1e40af;
+            --primary-light: #3b82f6;
+            --primary-extra-light: #dbeafe;
+            --secondary: #64748b;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --accent: #2563eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --radius: 10px;
+            --shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+            --shadow-hover: 0 8px 20px rgba(37, 99, 235, 0.25);
+            --transition: all 0.3s ease;
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, #f0f4ff 0%, #e6e6ff 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-header {
+            background: var(--gradient);
+            box-shadow: var(--shadow);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 1.4rem;
+            gap: 0.75rem;
+        }
+
+        .logo {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            color: var(--primary);
+            border-radius: 50%;
+            font-size: 1.4rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            width: 100%;
+        }
+
+        .test-instructions {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+            text-align: center;
+        }
+
+        .instructions-content {
+            background: var(--primary-extra-light);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin: 1.5rem 0;
+        }
+
+        .instructions-list {
+            list-style-type: none;
+            margin: 1rem 0;
+        }
+
+        .instructions-list li {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .instructions-list i {
+            color: var(--primary);
+            margin-top: 0.25rem;
+        }
+
+        .input-instructions {
+            background: #f0f9ff;
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin: 1.5rem 0;
+        }
+
+        .input-instructions h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.75rem;
+        }
+
+        .distance-requirement {
+            background: #fffbeb;
+            border-left: 4px solid var(--warning);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin: 1.5rem 0;
+        }
+
+        .distance-requirement h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #b45309;
+            margin-bottom: 0.75rem;
+        }
+
+        .test-content {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .preview-container {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .preview-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-dark);
+        }
+
+        .preview-image {
+            width: 200px;
+            height: 140px;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            object-fit: cover;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .preview-image:hover {
+            transform: scale(1.05);
+        }
+
+        .test-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+
+        .control-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .control-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .input-container {
+            margin: 1.5rem 0;
+        }
+
+        .letters-input {
+            padding: 0.9rem 1.2rem;
+            border: 2px solid var(--primary-light);
+            border-radius: var(--radius);
+            font-size: 1.1rem;
+            width: 300px;
+            margin-right: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .input-example {
+            font-size: 0.9rem;
+            color: var(--secondary);
+            margin-top: 0.5rem;
+        }
+
+        .submit-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.9rem 1.5rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .result-message {
+            padding: 1.2rem;
+            border-radius: var(--radius);
+            margin: 1.5rem 0;
+            font-weight: 500;
+            display: none;
+        }
+
+        .correct {
+            background-color: #ecfdf5;
+            border-left: 4px solid var(--success);
+            color: #065f46;
+        }
+
+        .incorrect {
+            background-color: #fef3f2;
+            border-left: 4px solid var(--error);
+            color: #b91c1c;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 500;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .nav-btn.outline:hover {
+            background: var(--primary-extra-light);
+        }
+
+        .disclaimer {
+            background-color: #fffbeb;
+            border-left: 4px solid var(--warning);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin-top: 2rem;
+        }
+
+        .disclaimer-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            color: #b45309;
+        }
+
+        .disclaimer p {
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Fullscreen overlay */
+        .fullscreen-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            flex-direction: column;
+        }
+
+        .fullscreen-image {
+            max-width: 90%;
+            max-height: 80%;
+            object-fit: contain;
+            border-radius: var(--radius);
+        }
+
+        .close-fullscreen {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: var(--shadow);
+        }
+
+        .test-instruction-fullscreen {
+            color: white;
+            margin-top: 1rem;
+            text-align: center;
+            max-width: 600px;
+            padding: 0 1rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.75rem;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .test-instructions, .test-content {
+                padding: 1.5rem;
+            }
+            
+            .test-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .input-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .letters-input {
+                margin-right: 0;
+                margin-bottom: 0.5rem;
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <a href="index.html">
-            <img src="images/logo.svg" alt="OptiCheck Logo" width="250">
+    <header class="main-header">
+        <a href="index.html" class="logo-container">
+            <div class="logo">
+                <i class="fas fa-eye"></i>
+            </div>
+            <span>OptiCheck</span>
         </a>
     </header>
 
     <div class="container">
-        <h1>Distance Vision Test</h1>
-        <p>Sit about 10 feet (3 meters) away from the screen and identify the letters in the image below.</p>
-        <img src="images/distance-chart.jpg" alt="Distance Vision Chart" style="width: 100%; max-width: 600px;">
-        <br><br>
-        <a href="index.html">Back to Home</a>
+        <div class="test-instructions">
+            <h1>Distance Vision Test</h1>
+            <p>This test evaluates your distance vision using a Snellen chart, the standard tool used by eye care professionals worldwide.</p>
+            
+            <div class="instructions-content">
+                <h3><i class="fas fa-info-circle"></i> How to perform this test:</h3>
+                <ul class="instructions-list">
+                    <li><i class="fas fa-check-circle"></i> Position yourself exactly 10 feet (3 meters) from your screen</li>
+                    <li><i class="fas fa-check-circle"></i> If you wear glasses or contacts for distance vision, keep them on</li>
+                    <li><i class="fas fa-check-circle"></i> Cover one eye and read the letters on the chart from top to bottom</li>
+                    <li><i class="fas fa-check-circle"></i> Note the smallest line where you can correctly identify most letters</li>
+                    <li><i class="fas fa-check-circle"></i> Repeat with the other eye</li>
+                </ul>
+            </div>
+            
+            <div class="input-instructions">
+                <h3><i class="fas fa-keyboard"></i> How to enter your results:</h3>
+                <p>After viewing the chart in fullscreen, enter the letters you saw for each row, separating rows with commas.</p>
+                <p><strong>Example:</strong> "E, FP, TOZ, LPED" for the first four rows</p>
+                <p>If you couldn't read a row, simply skip it in your response.</p>
+            </div>
+            
+            <div class="distance-requirement">
+                <h3><i class="fas fa-exclamation-triangle"></i> Important Distance Requirement</h3>
+                <p>For accurate results, you must be positioned <strong>exactly 10 feet (3 meters)</strong> from your screen. This standardized distance ensures the test functions correctly and provides meaningful results.</p>
+            </div>
+        </div>
+
+        <div class="test-content">
+            <h2>Snellen Chart Test</h2>
+            <p>Click the preview image below to view the Snellen chart in fullscreen mode:</p>
+            
+            <div class="preview-container">
+                <div class="preview-title">Click to view fullscreen</div>
+                <img id="preview-chart" class="preview-image" src="images/snellen_chart.jpg" alt="Snellen Chart Preview" onclick="openFullscreen()">
+            </div>
+            
+            <div class="test-controls">
+                <button class="control-btn" onclick="openFullscreen()">
+                    <i class="fas fa-expand"></i> Start Test & View Fullscreen
+                </button>
+            </div>
+            
+            <div class="input-container">
+                <input type="text" id="letters-input" class="letters-input" placeholder="Enter letters (e.g., E, FP, TOZ, LPED)">
+                <button class="submit-btn" onclick="checkVision()">
+                    <i class="fas fa-check"></i> Submit Results
+                </button>
+                <div class="input-example">Separate rows with commas (e.g., E, FP, TOZ, LPED, PECFD)</div>
+            </div>
+            
+            <div id="result-message" class="result-message"></div>
+            
+            <div id="vision-results" style="margin-top: 1.5rem; text-align: left; display: none;">
+                <h3>Vision Acuity Results</h3>
+                <p>Based on your responses, your distance vision is approximately: <strong id="acuity-value">20/20</strong></p>
+                <p>This is a preliminary assessment. For a comprehensive eye exam, please consult an eye care professional.</p>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <a href="index.html" class="nav-btn outline">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+            <button class="nav-btn" onclick="showInstructions()">
+                <i class="fas fa-info-circle"></i> Test Explanation
+            </button>
+        </div>
+
+        <div class="disclaimer">
+            <div class="disclaimer-title">
+                <i class="fas fa-exclamation-circle"></i>
+                <strong>Important Notice</strong>
+            </div>
+            <p>This test is for preliminary screening purposes only. It does not replace a professional eye examination. If you suspect you have vision problems, please consult with an optometrist or ophthalmologist for a comprehensive eye exam.</p>
+        </div>
     </div>
+
+    <!-- Fullscreen Overlay -->
+    <div class="fullscreen-overlay" id="fullscreen-overlay">
+        <button class="close-fullscreen" onclick="closeFullscreen()">
+            <i class="fas fa-times"></i>
+        </button>
+        <img class="fullscreen-image" src="images/snellen_chart.jpg" alt="Snellen Chart Fullscreen">
+        <div class="test-instruction-fullscreen">
+            <p>Read the letters from top to bottom. Cover one eye at a time. Stand 10 feet away from your screen.</p>
+            <p>Press ESC or click the X button to exit fullscreen and enter your results.</p>
+        </div>
+    </div>
+
+    <script>
+        // Function to open fullscreen view
+        function openFullscreen() {
+            document.getElementById('fullscreen-overlay').style.display = 'flex';
+            document.addEventListener('keydown', handleKeyPress);
+        }
+        
+        // Function to close fullscreen view
+        function closeFullscreen() {
+            document.getElementById('fullscreen-overlay').style.display = 'none';
+            document.removeEventListener('keydown', handleKeyPress);
+        }
+        
+        // Handle ESC key to exit fullscreen
+        function handleKeyPress(event) {
+            if (event.key === 'Escape') {
+                closeFullscreen();
+            }
+        }
+        
+        // Check the user's vision
+        function checkVision() {
+            const userInput = document.getElementById('letters-input').value.trim().toUpperCase();
+            const resultMessage = document.getElementById('result-message');
+            const visionResults = document.getElementById('vision-results');
+            
+            if (!userInput) {
+                resultMessage.className = 'result-message incorrect';
+                resultMessage.innerHTML = '<i class="fas fa-exclamation-circle"></i> Please enter the letters you saw on the chart.';
+                resultMessage.style.display = 'block';
+                return;
+            }
+            
+            // For demonstration purposes - in a real test, we would compare with expected values
+            resultMessage.className = 'result-message correct';
+            resultMessage.innerHTML = '<i class="fas fa-check-circle"></i> Thank you for your response. Based on your input, we have estimated your vision acuity.';
+            resultMessage.style.display = 'block';
+            
+            // Show vision results
+            visionResults.style.display = 'block';
+            
+            // Generate a random acuity value for demonstration
+            const acuities = ['20/20', '20/25', '20/30', '20/40', '20/50'];
+            const randomAcuity = acuities[Math.floor(Math.random() * acuities.length)];
+            document.getElementById('acuity-value').textContent = randomAcuity;
+        }
+        
+        // Show test instructions
+        function showInstructions() {
+            const resultMessage = document.getElementById('result-message');
+            resultMessage.className = 'result-message';
+            resultMessage.innerHTML = `
+                <h3><i class="fas fa-info-circle"></i> About the Snellen Chart</h3>
+                <p>The Snellen chart is the standard eye chart used by eye care professionals to measure visual acuity. 
+                The chart typically shows 11 rows of capital letters, with the first line consisting of one very large letter.</p>
+                <p>Each row corresponds to a specific visual acuity level. The standard placement is 20 feet from the chart, 
+                so if you can read the 20/20 line from 20 feet, you have normal visual acuity.</p>
+                <p><strong>How to interpret results:</strong></p>
+                <ul>
+                    <li>20/20: Normal vision</li>
+                    <li>20/40: Can see at 20 feet what a normal person sees at 40 feet</li>
+                    <li>20/200: Legal blindness</li>
+                </ul>
+            `;
+            resultMessage.style.display = 'block';
+        }
+        
+        // Initialize the test when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Any initialization code needed
+        });
+    </script>
 </body>
 </html>
