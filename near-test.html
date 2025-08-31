@@ -3,22 +3,646 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Near Vision Test</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Near Vision Test - OptiCheck</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a56db;
+            --primary-dark: #1e40af;
+            --primary-light: #3b82f6;
+            --primary-extra-light: #dbeafe;
+            --secondary: #64748b;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --accent: #2563eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --radius: 10px;
+            --shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+            --shadow-hover: 0 8px 20px rgba(37, 99, 235, 0.25);
+            --transition: all 0.3s ease;
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, #f0f4ff 0%, #e6e6ff 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-header {
+            background: var(--gradient);
+            box-shadow: var(--shadow);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 1.4rem;
+            gap: 0.75rem;
+        }
+
+        .logo {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            color: var(--primary);
+            border-radius: 50%;
+            font-size: 1.4rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            width: 100%;
+        }
+
+        .test-instructions {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+            text-align: center;
+        }
+
+        .instructions-content {
+            background: var(--primary-extra-light);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin: 1.5rem 0;
+        }
+
+        .instructions-list {
+            list-style-type: none;
+            margin: 1rem 0;
+        }
+
+        .instructions-list li {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .instructions-list i {
+            color: var(--primary);
+            margin-top: 0.25rem;
+        }
+
+        .distance-requirement {
+            background: #fffbeb;
+            border-left: 4px solid var(--warning);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin: 1.5rem 0;
+        }
+
+        .distance-requirement h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #b45309;
+            margin-bottom: 0.75rem;
+        }
+
+        .test-content {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .test-text-container {
+            margin: 1.5rem 0;
+            padding: 2rem;
+            background: #f8fafc;
+            border-radius: var(--radius);
+            text-align: left;
+        }
+
+        .text-sample {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .text-sample h3 {
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 0.5rem;
+        }
+
+        .text-sample p {
+            margin-bottom: 1rem;
+        }
+
+        .text-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+
+        .text-size-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary-extra-light);
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+        }
+
+        .text-size-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+
+        .text-size-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .size-indicator {
+            min-width: 80px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .control-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .control-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .input-container {
+            margin: 1.5rem 0;
+        }
+
+        .question {
+            margin-bottom: 1rem;
+            text-align: left;
+            background: var(--primary-extra-light);
+            padding: 1rem;
+            border-radius: var(--radius);
+        }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .option-btn {
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 2px solid var(--primary-light);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .option-btn:hover {
+            background: var(--primary-extra-light);
+        }
+
+        .option-btn.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .submit-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.9rem 1.5rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .result-message {
+            padding: 1.2rem;
+            border-radius: var(--radius);
+            margin: 1.5rem 0;
+            font-weight: 500;
+            display: none;
+        }
+
+        .correct {
+            background-color: #ecfdf5;
+            border-left: 4px solid var(--success);
+            color: #065f46;
+        }
+
+        .incorrect {
+            background-color: #fef3f2;
+            border-left: 4px solid var(--error);
+            color: #b91c1c;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 500;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .nav-btn.outline:hover {
+            background: var(--primary-extra-light);
+        }
+
+        .disclaimer {
+            background-color: #fffbeb;
+            border-left: 4px solid var(--warning);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin-top: 2rem;
+        }
+
+        .disclaimer-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            color: #b45309;
+        }
+
+        .disclaimer p {
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.75rem;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .test-instructions, .test-content {
+                padding: 1.5rem;
+            }
+            
+            .text-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .options {
+                flex-direction: column;
+            }
+            
+            .option-btn {
+                width: 100%;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <a href="index.html">
-            <img src="images/logo.svg" alt="OptiCheck Logo" width="250">
+    <header class="main-header">
+        <a href="index.html" class="logo-container">
+            <div class="logo">
+                <i class="fas fa-eye"></i>
+            </div>
+            <span>OptiCheck</span>
         </a>
     </header>
 
     <div class="container">
-        <h1>Near Vision Test</h1>
-        <p>Hold your device 14-16 inches away from your eyes and try to read the text in the image below.</p>
-        <img src="images/near-vision.jpg" alt="Near Vision Test" style="width: 100%; max-width: 600px;">
-        <br><br>
-        <a href="index.html">Back to Home</a>
+        <div class="test-instructions">
+            <h1>Near Vision Test</h1>
+            <p>This test evaluates your near vision (presbyopia) which is important for reading and other close-up tasks.</p>
+            
+            <div class="instructions-content">
+                <h3><i class="fas fa-info-circle"></i> How to perform this test:</h3>
+                <ul class="instructions-list">
+                    <li><i class="fas fa-check-circle"></i> Hold your device 14-16 inches (35-40 cm) from your eyes</li>
+                    <li><i class="fas fa-check-circle"></i> If you wear reading glasses, keep them on</li>
+                    <li><i class="fas fa-check-circle"></i> Read the text passage below</li>
+                    <li><i class="fas fa-check-circle"></i> Answer the questions about the text</li>
+                    <li><i class="fas fa-check-circle"></i> Use the size buttons to adjust text if needed</li>
+                </ul>
+            </div>
+            
+            <div class="distance-requirement">
+                <h3><i class="fas fa-exclamation-triangle"></i> Important Distance Requirement</h3>
+                <p>For accurate results, you must hold your device <strong>14-16 inches (35-40 cm)</strong> from your eyes. This is the standard distance for near vision testing.</p>
+            </div>
+        </div>
+
+        <div class="test-content">
+            <h2>Reading Acuity Test</h2>
+            <p>Read the text below and answer the questions that follow:</p>
+            
+            <div class="text-controls">
+                <div class="text-size-control">
+                    <button class="text-size-btn" onclick="changeTextSize(-2)">A-</button>
+                    <div class="size-indicator" id="text-size-indicator">Medium</div>
+                    <button class="text-size-btn" onclick="changeTextSize(2)">A+</button>
+                </div>
+                <button class="control-btn" onclick="resetTest()">
+                    <i class="fas fa-redo"></i> Reset Test
+                </button>
+            </div>
+            
+            <div class="test-text-container">
+                <div class="text-sample" id="reading-text" style="font-size: 16px;">
+                    <h3>The Importance of Regular Eye Exams</h3>
+                    <p>Regular eye examinations are vital for maintaining good vision and overall eye health. Many eye diseases, such as glaucoma and macular degeneration, develop gradually without noticeable symptoms in their early stages.</p>
+                    <p>During a comprehensive eye exam, your optometrist will not only determine your prescription for glasses or contact lenses but will also check your eyes for common eye diseases, assess how your eyes work together, and evaluate your eyes as an indicator of your overall health.</p>
+                    <p>Experts recommend that adults have their eyes tested every two years, and annually after age 60. However, individuals with existing eye conditions or risk factors may need more frequent examinations.</p>
+                </div>
+            </div>
+            
+            <div class="input-container">
+                <div class="question">
+                    <p>1. What are two eye diseases mentioned that develop gradually without early symptoms?</p>
+                    <div class="options">
+                        <button class="option-btn" onclick="selectOption(this, 1)">Cataracts and diabetic retinopathy</button>
+                        <button class="option-btn" onclick="selectOption(this, 1)">Glaucoma and macular degeneration</button>
+                        <button class="option-btn" onclick="selectOption(this, 1)">Myopia and hyperopia</button>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>2. How often do experts recommend adults have eye exams?</p>
+                    <div class="options">
+                        <button class="option-btn" onclick="selectOption(this, 2)">Every year</button>
+                        <button class="option-btn" onclick="selectOption(this, 2)">Every five years</button>
+                        <button class="option-btn" onclick="selectOption(this, 2)">Every two years</button>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>3. What did the text say about eyes as an indicator of health?</p>
+                    <div class="options">
+                        <button class="option-btn" onclick="selectOption(this, 3)">Eyes can indicate overall health</button>
+                        <button class="option-btn" onclick="selectOption(this, 3)">Eyes are separate from general health</button>
+                        <button class="option-btn" onclick="selectOption(this, 3)">Eye health doesn't relate to body health</button>
+                    </div>
+                </div>
+                
+                <button class="submit-btn" onclick="checkAnswers()">
+                    <i class="fas fa-check"></i> Submit Answers
+                </button>
+            </div>
+            
+            <div id="result-message" class="result-message"></div>
+            
+            <div id="vision-results" style="margin-top: 1.5rem; text-align: left; display: none;">
+                <h3>Near Vision Results</h3>
+                <p>Based on your responses, your near vision is: <strong id="acuity-value">Normal</strong></p>
+                <p>This is a preliminary assessment. For a comprehensive eye exam, please consult an eye care professional.</p>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <a href="index.html" class="nav-btn outline">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+            <button class="nav-btn" onclick="showInstructions()">
+                <i class="fas fa-info-circle"></i> Test Explanation
+            </button>
+        </div>
+
+        <div class="disclaimer">
+            <div class="disclaimer-title">
+                <i class="fas fa-exclamation-circle"></i>
+                <strong>Important Notice</strong>
+            </div>
+            <p>This test is for preliminary screening purposes only. It does not replace a professional eye examination. If you experience difficulty with near vision tasks, please consult with an optometrist or ophthalmologist for a comprehensive eye exam.</p>
+        </div>
     </div>
+
+    <script>
+        let currentTextSize = 16;
+        let textSizes = ['Small', 'Medium', 'Large', 'X-Large'];
+        let selectedOptions = {1: null, 2: null, 3: null};
+        const correctAnswers = {
+            1: "Glaucoma and macular degeneration",
+            2: "Every two years",
+            3: "Eyes can indicate overall health"
+        };
+        
+        // Change text size
+        function changeTextSize(sizeChange) {
+            const textElement = document.getElementById('reading-text');
+            currentTextSize += sizeChange;
+            
+            // Limit size between 12px and 24px
+            if (currentTextSize < 12) currentTextSize = 12;
+            if (currentTextSize > 24) currentTextSize = 24;
+            
+            textElement.style.fontSize = currentTextSize + 'px';
+            
+            // Update size indicator
+            let sizeIndex = 1; // Medium by default
+            if (currentTextSize <= 14) sizeIndex = 0;
+            else if (currentTextSize >= 20) sizeIndex = 2;
+            if (currentTextSize >= 22) sizeIndex = 3;
+            
+            document.getElementById('text-size-indicator').textContent = textSizes[sizeIndex];
+        }
+        
+        // Select an option
+        function selectOption(optionElement, questionNumber) {
+            // Remove selected class from all options in this question
+            const parent = optionElement.parentElement;
+            const options = parent.querySelectorAll('.option-btn');
+            options.forEach(opt => opt.classList.remove('selected'));
+            
+            // Add selected class to clicked option
+            optionElement.classList.add('selected');
+            
+            // Store selected option
+            selectedOptions[questionNumber] = optionElement.textContent;
+        }
+        
+        // Check answers
+        function checkAnswers() {
+            const resultMessage = document.getElementById('result-message');
+            const visionResults = document.getElementById('vision-results');
+            
+            // Check if all questions are answered
+            let allAnswered = true;
+            for (let i = 1; i <= 3; i++) {
+                if (!selectedOptions[i]) {
+                    allAnswered = false;
+                    break;
+                }
+            }
+            
+            if (!allAnswered) {
+                resultMessage.className = 'result-message incorrect';
+                resultMessage.innerHTML = '<i class="fas fa-exclamation-circle"></i> Please answer all questions before submitting.';
+                resultMessage.style.display = 'block';
+                return;
+            }
+            
+            // Check answers
+            let correctCount = 0;
+            for (let i = 1; i <= 3; i++) {
+                if (selectedOptions[i] === correctAnswers[i]) {
+                    correctCount++;
+                }
+            }
+            
+            // Display results
+            resultMessage.className = 'result-message correct';
+            resultMessage.innerHTML = `<i class="fas fa-check-circle"></i> You got ${correctCount} out of 3 questions correct.`;
+            resultMessage.style.display = 'block';
+            
+            // Determine vision result based on performance and text size used
+            let visionLevel = "Normal";
+            if (correctCount < 3 || currentTextSize > 18) {
+                visionLevel = "Some difficulty";
+            }
+            if (correctCount < 2 || currentTextSize > 22) {
+                visionLevel = "Significant difficulty";
+            }
+            
+            visionResults.style.display = 'block';
+            document.getElementById('acuity-value').textContent = visionLevel;
+        }
+        
+        // Reset the test
+        function resetTest() {
+            currentTextSize = 16;
+            document.getElementById('reading-text').style.fontSize = '16px';
+            document.getElementById('text-size-indicator').textContent = 'Medium';
+            
+            // Clear selections
+            selectedOptions = {1: null, 2: null, 3: null};
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            // Hide results
+            document.getElementById('result-message').style.display = 'none';
+            document.getElementById('vision-results').style.display = 'none';
+        }
+        
+        // Show test instructions
+        function showInstructions() {
+            const resultMessage = document.getElementById('result-message');
+            resultMessage.className = 'result-message';
+            resultMessage.innerHTML = `
+                <h3><i class="fas fa-info-circle"></i> About Near Vision Testing</h3>
+                <p>Near vision, also called presbyopia, is the ability to see objects clearly at close distances. This typically begins to decline after age 40.</p>
+                <p>This test evaluates your reading vision by having you read a passage and answer questions about it. The text size adjustment allows us to assess at what size you can read comfortably.</p>
+                <p><strong>What your results mean:</strong></p>
+                <ul>
+                    <li>If you could read the text comfortably at medium size and answer all questions correctly, your near vision is likely normal for your age</li>
+                    <li>If you needed larger text or had difficulty with the questions, you may need reading glasses or a vision correction update</li>
+                </ul>
+            `;
+            resultMessage.style.display = 'block';
+        }
+    </script>
 </body>
 </html>
